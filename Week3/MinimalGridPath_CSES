@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void solver(int n, const vector<string>& grid){
+    string path="";
+    path+=grid[0][0];
+    vector<int> curr;
+    curr.push_back(0);
+    for(int i=0;i<2*n-2;i++){
+        vector<int> c1;
+        char mini='Z';
+        for(auto p:curr){
+            if(p < n-1 ){
+            mini = min(grid[p+1][i-p],mini);}
+             if(i-p<n-1 ){
+            mini=min(grid[p][i-p+1],mini);}
+        }
+        path+=mini;
+        for(auto p:curr){
+            if(i-p<n-1 && grid[p][i-p+1] == mini){
+                if(c1.size()<1) c1.push_back(p);
+            else if( c1[c1.size()-1]!= p ) {c1.push_back(p);}}
+        if(p < n-1 && grid[p+1][i-p] == mini ){
+            if(c1.size()<1) c1.push_back(p+1);
+            else if(c1[c1.size()-1] != p+1){ c1.push_back(p+1);}}}
+        curr=c1;
+    }
+    cout<<path<<endl;
+}
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n;cin>>n;
+    vector <string> v(n);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+    }
+    solver(n,v);
+}
