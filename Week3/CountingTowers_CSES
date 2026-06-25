@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void solve(vector<long long int> &a, vector <long long int> &b){
+    int n = 1e6;
+    a[0] = 1;b[0]=1;
+    for(int i=1;i<n;i++){
+        a[i] = (a[i-1] + a[i-1])%big;
+        a[i]+=a[i];a[i]%=big;a[i]+= b[i-1];a[i]%=big;
+        b[i] = a[i-1];b[i]+=b[i-1];b[i]%= big;b[i]+=b[i-1];b[i]%= big;
+    }
+}
+int main(){
+    int t;cin>>t;
+    vector <long long int> a(1e6),b(1e6);
+    solve(a,b);
+    while(t--){
+        int n;cin>>n;
+        long long int ans = a[n-1];
+        ans+=b[n-1];ans=ans%big;
+        cout<<ans<<endl;
+        
+    }
+}
