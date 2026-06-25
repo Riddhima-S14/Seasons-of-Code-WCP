@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void ans(int n, vector <long long int> &a){
+    a[6] = 1;
+    a[5]=1;
+    for(int i=7;i<n+6;i++){
+        a[i] = a[i-1];a[i]=a[i]%big;a[i]+=a[i-2];a[i]=a[i]%big;
+        a[i]+= a[i-3];a[i]=a[i]%big;a[i]+= a[i-4];a[i]=a[i]%big;
+        a[i]+=a[i-5];a[i]=a[i]%big;a[i]+=a[i-6];a[i]=a[i]%big;
+    }
+}
+int main(){
+    int n;cin>>n;
+    vector < long long int> a(n+7,0);
+    ans(n,a);
+    cout<<a[n+5]<<endl;
+}
