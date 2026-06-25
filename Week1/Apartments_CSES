@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m,k;cin>>n>>m>>k;
+    vector <int> tenants(n), apart(m) ;
+    for(int i=0;i<n;i++){
+        cin>>tenants[i];
+    }
+    for(int i=0;i<m;i++){
+        cin>>apart[i];
+    }
+    int t = 0, a = 0, count=0;
+    sort(tenants.begin(), tenants.end());
+    sort(apart.begin(), apart.end());
+    while(t<n && a<m){
+        if( abs(tenants[t]-apart[a]) <= k  ){
+            t++;a++;count++;
+            continue;
+        }
+        else if ( tenants[t] - apart[a] < -k ) t++;
+        else if ( tenants[t] - apart[a] > k) a++;
+    }
+    cout<< count<<endl;
+}
