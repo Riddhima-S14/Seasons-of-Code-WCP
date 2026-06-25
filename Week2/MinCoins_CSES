@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void ans(int n,int x, vector < int> &c, vector<int> &a){
+    a[0]=1e8;
+    for(int i=0;i<n;i++){
+        a[c[i]] = 1;
+    }
+    for(int i=1;i<x+1;i++){
+        if (a[i]==0){
+            a[i] = (i<c[0])? 0 : a[i-c[0]] + 1;
+            if(a[i]==1) {a[i]=a[0]+1;}
+            for(int j=1;j<n;j++){
+                if(a[(i-c[j]>0)?i-c[j] : 0] == 0 || a[(i-c[j]>0)?i-c[j] : 0] == a[0]) continue;
+                a[i] = min(a[(i-c[j]>0)?i-c[j] : 0] + 1,a[i]);
+            }
+            if(a[i]>= a[0]) a[i]=0;
+        }
+    }
+    if(a[x]==0) a[x] = -1;
+    cout<<a[x]<<endl;
+}
+int main(){
+    int n,x;cin>>n>>x;
+    vector <int> arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    sort(arr.begin(),arr.end());
+    vector <int> a(max(arr[n-1]+1,x+1),0);
+    ans(n,x,arr,a);
+}
