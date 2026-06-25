@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool possible(const vector <int> &stalls, int c, int d ){
+    auto current = stalls.begin();
+        int cows = c-1;
+        while(cows){
+            current = lower_bound(stalls.begin(),stalls.end(),d + *current);
+            if(current == stalls.end()){
+                return false;
+            }
+            else{
+                cows--;
+            }}
+        return true;
+}
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n,c;cin>>n>>c;
+        vector <int> stall(n);
+        for(int i=0;i<n;i++) cin>>stall[i];
+        sort(stall.begin(), stall.end());
+        int total = stall[n-1] - stall[0];
+        int upper = total,lower = 0, ans = 0;
+        while(upper-lower > 1){
+            int mid = (upper+lower)/2 ; 
+            if(possible(stall,c,mid)){
+                ans = mid;
+                lower = mid;
+            }
+            else{
+                upper=mid;
+            }
+        }
+        cout<<ans<<endl;
+
+    }
+
+}
