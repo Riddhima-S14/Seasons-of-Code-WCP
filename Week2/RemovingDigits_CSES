@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+vector<int> digits(int n){
+    vector<int> d;
+    while(n>0){
+        d.push_back(n%10);
+        n=n/10;
+    }
+    return d;
+}
+void solver(int n, vector<int> &a){
+    for(int i=0;i<10;i++){
+        a[i]=1;
+    }
+    for(int i=10;i<n+1;i++){
+        int ans=1e7;
+        for(auto x: digits(i)){
+            if(x==0)continue;
+            ans = min(ans,a[i-x]+1);
+        }
+        a[i]=ans;
+    }
+    cout<<a[n]<<endl;
+}
+int main(){
+    int n;cin>>n;
+    vector <int> arr(max(n+1,10),0);
+    solver(n,arr);
+}
