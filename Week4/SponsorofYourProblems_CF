@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+string nine(int n){
+   string s="";
+    while(n--){
+        s+='9';
+    }
+    return s; 
+}
+string zero(int n){
+    string s="";
+    while(n--){
+        s+='0';
+    }
+    return s;
+}
+int solver(string s1, string s2,int index, int n,int mode){
+    if(index>n-1) return 0;
+    else if(s1[index] == s2[index] ) {
+        if (mode == 1) return 2+solver(s1,s2,index+1,n,1);
+    else return 1 + solver(s1,s2,index+1,n,2);}
+    else if( s2[index]-s1[index]>1 ) return 0;
+    else{
+        if(mode==1){
+        return 1 + min(solver(s1,nine(n),index+1,n,2),solver(zero(n),s2,index+1,n,2));}
+        else{
+            return 0;
+        }
+    }
+}
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int l,r;cin>>l>>r;
+        cout<<solver(to_string(l),to_string(r),0,to_string(l).size(),1)<<endl;
+    }
+}
