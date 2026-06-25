@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+int tree(const vector <vector<int> > &trees , int i, int j){
+    if(i<0 || j< 0 ) return 0;
+    else return trees[i][j];
+}
+int main(){
+    int n,q;cin>>n>>q;
+    vector <vector<int> > trees(n,vector <int> (n,0) );
+    vector<vector<int> > rows(n,vector <int> (n,0) );
+    for(int i=0;i<n;i++){
+        for (int j=0;j<n;j++){
+            char x;cin>>x;
+            if(x == '*'){
+                if(j ==0){
+                    rows[i][j]++;
+                }
+                else{
+                    rows[i][j] = rows[i][j-1]+1;
+                }
+            }
+            if(x== '.'){
+                if(j>0){
+                    rows[i][j] = rows[i][j-1];
+                }
+            }
+        }
+    }
+    for(int i = 0;i<n;i++){
+        for (int j=0;j<n;j++){
+            if(i==0) trees[i][j] = rows[i][j];
+            else{
+                trees[i][j] = trees[i-1][j] + rows[i][j];
+            }
+        }
+    }
+    while(q--){
+        int y1,x1,y2,x2;cin>>y1>>x1>>y2>>x2;
+        y1--;x1--;y2--;x2--;
+        int ans = tree( trees,y2,x2) - tree(trees,y2,x1-1) - tree(trees,y1-1,x2) +tree(trees,y1-1,x1-1);
+        cout<<ans<<endl;
+    }
+}
