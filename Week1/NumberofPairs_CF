@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n,l,r;cin>>n>>l>>r;
+        vector <int> arr(n); 
+        for (int i=0;i<n;i++) cin>>arr[i];
+        sort(arr.begin(),arr.end());
+        long long int pairs=0,a=0,b=n-1;
+        int sum = arr[a]+arr[b];
+        while(a<n && b>-1 && a < b){
+            if(sum<l){
+                a++;
+                sum = arr[a]+arr[b];
+            }
+            else if (sum > r){
+                b--;
+                sum = arr[a]+arr[b];
+            }
+            else{
+                pairs++;
+                auto it= upper_bound(arr.begin()+a+1,arr.begin()+b,r-arr[b]);
+                pairs += it-(arr.begin()+a)-1;
+                b--;
+                sum = arr[a]+arr[b];
+            }
+        }
+        cout<<pairs<<endl;
+ 
+    }
+}
