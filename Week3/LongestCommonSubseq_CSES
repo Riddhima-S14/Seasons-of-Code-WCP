@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void solver(int n,int m,vector<int>v1,vector<int>v2){
+    vector<vector<int> > v(n+1,vector<int> (m+1,0));
+    vector<int> f(n,0);
+    int ml=0;
+    for(int i=1;i<n+1;i++){
+        for(int j=1;j<m+1;j++){
+            if(v1[i-1] == v2[j-1]) {v[i][j]= v[max(i-1,0)][max(j-1,0)]+1;
+                                   f[i-1] = max(v[i][j],f[i-1]);}
+            else { v[i][j] = max(v[max(i-1,0)][j],v[i][max(j-1,0)]);
+        }
+    }}
+    cout<<v[n][m]<<endl;
+    int count=v[n][m];
+    vector<int> sub;
+    int i = n, j = m;
+    
+    while (i > 0 && j > 0) {
+        if (v1[i - 1] == v2[j - 1]) {
+            sub.push_back(v1[i - 1]);
+            i--; 
+            j--;
+        }
+        else if (v[i - 1][j] >= v[i][j - 1]) {
+            i--; // Move up
+        } else {
+            j--; // Move left
+        }
+    }
+    for(int i= sub.size()-1;i>-1;i--) cout<<sub[i]<<" ";
+    cout<<endl;
+}
+int main(){
+    int n,m;cin>>n>>m;
+    vector<int> an(n),am(m);
+    for(int i=0;i<n;i++) cin>>an[i];
+    for(int i=0;i<m;i++) cin>>am[i];
+    solver(n,m,an,am);
+}
