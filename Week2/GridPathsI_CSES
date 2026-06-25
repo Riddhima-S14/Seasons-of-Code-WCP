@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void solver(vector<vector<char> > v, int n){
+    vector< vector<long long int>> arr(n,vector<long long int> (n,0));
+    arr[n-1][n-1]= (v[n-1][n-1]=='*')? 0:1 ;
+    if(v[n-1][n-2] == '*')arr[n-1][n-2] =0;
+    else arr[n-1][n-2] = 1;
+    if(v[n-2][n-1] == '*') arr[n-2][n-1] = 0;
+    else arr[n-2][n-1] =1;
+    for(int i= n-1;i>-1;i--){
+        for(int j= n-1;j>-1;j--){
+            if(i==n-1 && (j== n-1 || j == n-2) || (i==n-2 && j== n-1)) continue;
+            if(v[i][j] == '*') {arr[i][j]=0;
+                               continue;}
+            if(i<n-1 && v[i+1][j] == '.') arr[i][j] +=arr[i+1][j];
+            arr[i][j]%=big;
+            if(j<n-1 && v[i][j+1] == '.') arr[i][j]+= arr[i][j+1];
+            arr[i][j]%=big;
+        }
+    }
+    cout<<(arr[0][0])*(arr[n-1][n-1])<<endl;
+}
+int main(){
+    int n;cin>>n;
+    vector<vector<char> > v(n,vector<char>(n));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>v[i][j];
+        }
+    }
+    if(n==1) {
+        if(v[0][0]=='*') cout<<0<<endl;
+        else cout<<1<<endl;
+    }
+    else solver(v,n);
+}
