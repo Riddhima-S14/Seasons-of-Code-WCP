@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        long long int s=0;
+        int m=0,z=0;
+        int f;cin>>f;
+        if(f<0)m++;
+            if(f==0)z++;
+            f = abs(f);
+            s+=f;
+        int mini = f;
+        for(int i=1;i<n;i++){
+            int temp;
+            cin>>temp;
+            if(temp<0)m++;
+            if(temp==0)z++;
+            temp = abs(temp);
+            s+=temp;
+            mini=min(mini,temp);
+        }
+        if(z == 0 && m%2 == 1) s = s - 2*mini;
+        cout<<s<<endl;
+    }
+}
