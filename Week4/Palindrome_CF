@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int num(string s) {
+    long long int val=0;
+    for (char c : s) {
+        val = val * 10 + (c - '0');
+    }
+    return val;
+}
+void solve(long long int n,int rem){
+    for(int x=0;x<10000;x++){
+        string p = to_string(x);
+        string rev_p = to_string(x);
+        reverse(rev_p.begin(),rev_p.end());
+        string p1 = p + rev_p;
+        long long int a = num(p1);
+        if(a%12 == rem ){
+            long long int b = n-a;
+            if(b >= 0){
+            cout<<a<<" "<<b<<endl;
+            return;}
+        }
+        string p2 = p + rev_p.substr(1);
+        long long int a2 = num(p2);
+        if(a2%12 == rem ){
+            long long int b2 = n-a2;
+            if(b2>=0){
+            cout<<a2<<" "<<b2<<endl;
+            return;}
+        }
+    }
+    cout<<-1<<endl;
+}
+int main(){
+    int t;cin>>t;
+    while(t--){
+        long long int n;cin>>n;
+        long long int p=0,d=1;
+        int rem = n%12;
+        solve(n,rem);
+    }
+}
