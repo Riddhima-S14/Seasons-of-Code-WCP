@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        vector<int>a(n),b(n),index(n+1,0),indexb(n+1,0);
+        for(int i=0;i<n;i++) {cin>>a[i];
+                              index[a[i]]=i+1;}
+        vector<int>visited(n+1,0);
+        vector<int> ff(n+1,0);
+        set <int> og;
+        vector<pair<int,int> >values;
+        for(int i=0;i<n;i++){
+            cin>>b[i];
+            if(b[i]!=-1){values.push_back({b[i],i+1});
+                         indexb[b[i]] = i+1;
+                         ff[b[i]]=1;
+                        og.insert(b[i]);}
+        }
+        sort(values.begin(),values.end());
+        int visit=0,num=0,val_idx=0;
+        int in=0,filled=values.size();
+        bool ans=true;
+        if(values.size()){ in=values[0].second;num=values[0].first;visited[in]=1;
+        while(true){
+            if(b[index[in]-1]==-1) {
+                if(ff[index[num]]==1) {ans=false;break;}
+                b[index[in]-1] = index[num];ff[index[num]]=1;
+                visited[index[in]]=1;
+                                        in=index[in];num=index[num];filled++;
+                                   if(filled == n) break;}
+            else if(b[index[in]-1]!=-1 ){
+                if(b[index[in]-1] == index[num]) {visit++;visited[index[in]]=1;
+                                                  while (val_idx < values.size() && visited[values[val_idx].second]) {
+                        val_idx++;
+                    }
+                                                 if (val_idx == values.size()) {
+                        break;
+                    }
+                                                  else{
+                                                     in = values[val_idx].second;
+                                                    num = values[val_idx].first;
+                                                      visited[in] = 1;
+                                                 }}
+                else{
+                    ans=false;break;
+                }
+                                                
+            }
+            
+        }}
+        if(ans){
+        set <int> assigned;
+        for(int i=0;i<n;i++){
+            assigned.insert(i+1);
+        }
+        for(int i=0;i<n;i++){
+            if(b[i]>0) assigned.erase(b[i]);
+        }
+        for(int i =0;i<n;i++){
+            if (b[i]==-1) {b[i] = *assigned.begin();
+                           assigned.erase(assigned.begin());}
+        }
+            cout<<"YES"<<endl;
+            for(int i=0;i<n;i++) cout<<b[i]<<" ";
+            cout<<endl;}
+        else cout<<"NO"<<endl;
+        
+    }
+}
