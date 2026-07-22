@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        long long int temp = n;
+        int distinct_primes = 0;
+        int pp=0;
+        for (long long int i = 2; i * i <= temp; i++) {
+        if (temp % i == 0) {
+            distinct_primes++;
+            while (temp % i == 0) {
+                pp++;
+                temp /= i;
+            }
+        }
+            
+    }
+        if (temp > 1) {
+        distinct_primes++;
+        pp++;
+    }
+        distinct_primes=max(1,distinct_primes);
+        pp= max(1,pp);
+        long long int layers=0;
+        layers+= distinct_primes;
+        layers+=pp-1;
+        cout<<layers<<endl;
+    }
+}
