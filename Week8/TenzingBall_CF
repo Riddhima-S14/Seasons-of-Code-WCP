@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+void solver(int n, const vector<int> &v){
+    vector<int> ans(n,0),mini(n,1e6);
+    ans[n-1]=1;
+    mini[v[n-1]-1]=0;
+    for(int i = n-2;i>-1;i--){
+        ans[i] = min(ans[i+1]+1,mini[v[i]-1]);
+        mini[v[i]-1] = min(mini[v[i]-1],ans[i+1]);
+    }
+    cout<<n-ans[0]<<endl;
+}
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;cin>>t;int count=1;
+    while(t--){
+        int n;cin>>n;
+        vector<int> v(n);
+        for(int i=0;i<n;i++) cin>>v[i];
+        solver(n,v);
+    }
+}
