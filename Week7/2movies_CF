@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        vector<int> m1(n,0),m2(n,0);
+        for(int i=0;i<n;i++) cin>>m1[i];
+        for(int i=0;i<n;i++) cin>>m2[i];
+        int both=0,none=0,a=0,b=0;
+        for(int i=0;i<n;i++){
+            if(m1[i] == m2[i] && m1[i]==1) both++;
+            else if(m1[i] == m2[i] && m1[i]==-1) none++;
+            else if (m1[i]==1) a++;
+            else if(m2[i]==1) b++;
+        }
+        int better=max(a,b),worse=a+b-better;
+        int ans=0;
+        while(both>0 && better!=worse){
+            worse++;both--;
+        }
+        if(both>0){
+            if(both>=none){
+                both-=none;
+                ans=better+both/2;
+            }
+            else{
+                none=none-both;
+                ans=better-max(none/2,(none+1)/2);
+            }
+        }
+        else{
+            while(none>0 && better!=worse){
+                none--;better--;
+            }
+            if(none>0) ans=better-max(none/2,(none+1)/2);
+            else ans=worse;
+        }
+        cout<<ans<<endl;
+    }
+}
