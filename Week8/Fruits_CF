@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big = 1e9 + 7;
+
+int main(){
+    int n,m;cin>>n>>m;
+    vector <int> a(n);
+    for(int i=0;i<n;i++) cin>>a[i];
+    map <string,int> fruit;
+    for(int i=0;i<m;i++){
+        string s;cin>>s;
+        fruit[s]++;
+    }
+    vector<int> fnum;
+    for(auto &pairf : fruit){
+        fnum.push_back(pairf.second);
+    }
+    long long int bs=0;
+    long long int as=0;
+    sort(fnum.begin(),fnum.end());
+    sort(a.begin(),a.end());
+    for(int i=0;i<fnum.size();i++){
+        as+= fnum[fnum.size()-1-i]*a[i];
+        bs+= fnum[fnum.size()-1-i]*a[a.size()-i-1];
+    }
+    cout<<as<<" "<<bs<<endl;
+    
+}
