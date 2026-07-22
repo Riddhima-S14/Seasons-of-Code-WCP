@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n,c;cin>>n>>c;
+        vector<int> a(n),b(n),cop1(n),cop2(n);
+        for(int i=0;i<n;i++) cin>>a[i];
+        for(int i=0;i<n;i++) {cin>>b[i]; cop1[i]=a[i];cop2[i]=b[i];}
+        sort(cop2.begin(),cop2.end());
+        sort(cop1.begin(),cop1.end());
+        int ans=0;
+        bool possible=true;
+        for(int i=0;i<n;i++){
+            if(cop1[i]<cop2[i]) possible=false;
+            else{
+                ans+=cop1[i]-cop2[i];
+            }
+        }
+        ans+=c;
+        if(possible){
+            int alt=0;
+            int real=0;
+            for(int i=0;i<n;i++){
+                if(b[i] > a[i]){
+                    real=1;
+                    break;
+                }
+                else{
+                alt+= -1*(b[i]-a[i]);}
+            }
+            if(real==0){
+                ans= min(alt,ans);
+            }
+            cout<<ans<<endl;
+        }
+        else{
+        cout<<-1<<endl;}
+        
+    }
+}
