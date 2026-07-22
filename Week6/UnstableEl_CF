@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+void solve() {
+    long long int n, k;
+    cin >> n >> k;
+    vector<long long int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    vector<long long int > freqs;
+    long long int current_count = 1;
+    for (int i = 1; i < n; ++i) {
+        if (a[i] == a[i - 1]) {
+            current_count++;
+        } else {
+            freqs.push_back(current_count);
+            current_count = 1;
+        }
+    }
+    freqs.push_back(current_count); 
+    sort(freqs.begin(), freqs.end());
+    int num_unique = freqs.size();
+    vector<long long int > suf_sum(num_unique + 1, 0);
+    for (int i = num_unique - 1; i >= 0; --i) {
+        suf_sum[i] = suf_sum[i + 1] + freqs[i];
+    }
+    long long int valid_arrays = 0;
+
+    for (int i = 0; i < num_unique; ++i) {
+        if (i > 0 && freqs[i] == freqs[i - 1]) {
+            continue;
+        }
+        long long int v = freqs[i];
+        long long int c = num_unique - i;    
+        long long int f = suf_sum[i];        
+        long long int diff = k - f;
+        if (diff % c == 0) {
+            if (k >= f - c * (v - 1)) {
+                valid_arrays++;
+            }
+        }
+    }
+
+    cout << valid_arrays << endl;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
