@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long int big=1e9+7;
+long long int possible(int n){
+    long long int ans=1;
+    for(int i=1;i<n;i++){
+        ans*=2;
+        ans%=big;
+    }
+    return ans;
+}
+tuple<long long, long long, long long> extendedGCD(long long a, long long b) {
+    if (b == 0)
+        return {a, 1, 0};
+    auto [g, x1, y1] = extendedGCD(b, a % b);
+    return {g, y1, x1 - (a / b) * y1};
+}
+
+long long modInverse(long long a, long long m) {
+    auto [g, x, y] = extendedGCD(a, m);
+    return (x % m + m) % m;
+}
+int main(){
+    int t;cin>>t;
+    while(t--){
+    int n;cin>>n;
+    vector<int>v(n,0);
+        for(int i=0;i<n;i++)cin>>v[i];
+        vector<int> unique,el;
+        int count=1;
+        el.push_back(v[0]);
+        for(int i=0;i<n-1;i++){
+            if(v[i]==v[i+1])count++;
+            else {unique.push_back(count);el.push_back(v[i+1]);
+            count=1;}
+        }
+        unique.push_back(count);
+        long long int seq=1;
+        long long int factor=1;
+        for(int i=0;i<unique.size();i++){
+            factor*=possible(unique[i]);factor%=big;
+        }
+        seq=factor;
+        if(v[0]==-1){
+            vector<pair<int,int> > gap;
+            for(int i=0;i<el.size()-1;i++){
+                if(el[i+1]-el[i]==1) gap.push_back({i,el[i]});
+            }
+            int num=unique[0];
+            for(int i=0;i<gap.size();i++){
+                // long long int temp=num*unique[gap[i].first];
+//                 temp%=big;temp*=unique[gap[i].first+1];temp%=big;
+//                 long long int ye=factor;
+//                 ye*=modInverse(num,big);ye%=big;ye*=modInverse(possible(unique[gap[i].first+1]),big);ye%=big;
+//                 ye*=modInverse(possible(unique[gap[i].first]),big);ye%=big;
+//                 ye*=possible(num-1);ye%=big;ye*=possible(unique[gap[i].first+1]-1);ye%=big;
+//                 ye*=possible(unique[gap[i].first]-1);ye%=big;
+                seq+=factor;seq%=big;
+            }
+        }
+        cout<<seq<<endl;
+}}
