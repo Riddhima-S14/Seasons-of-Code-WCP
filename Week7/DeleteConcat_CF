@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int t;cin>>t;
+    while(t--){
+        int n,c;cin>>n>>c;
+        vector<int> a(n,0);
+        long long int sum=0;
+        for(int i=0;i<n;i++) {cin>>a[i];a[i]=a[i]-c;sum+=a[i];}
+        sort(a.begin(),a.end());
+        int count=0,in=0;
+        while(count<n/2 && a[in] <0){
+            sum-=a[in];in++;count++;
+        }
+        cout<<sum<<endl;
+    }
+}
