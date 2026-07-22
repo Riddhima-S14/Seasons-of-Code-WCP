@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+void mindisp(const vector<int> &arr){
+    int n=arr.size();
+    vector<int>copy(n);
+    for(int i=0;i<n;i++) copy[i]=arr[i];
+    sort(copy.begin(),copy.end());
+}
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        vector<long long int>a(n),sums(n);
+        for(int i=0;i<n;i++)cin>>a[i];
+        sums[0]=a[0];
+        for(int i=1;i<n;i++){
+            sums[i] = sums[i-1]+a[i];
+        }
+        for(int i=0;i<n-1;i++){
+            if(a[i]>a[i+1]){
+                long long int temp=a[i+1];
+                a[i+1]=a[i]+a[i+1];
+                a[i]=temp;
+            }
+            
+        }
+        cout<<a[n-1]<<endl;
+    }
+}
